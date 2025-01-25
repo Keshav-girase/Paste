@@ -31,7 +31,7 @@ const Navbar = () => {
           {link.title}
         </NavLink>
       ))}
-      <button onClick={toggleTheme} className="text-black dark:text-white   p-2 rounded-lg">
+      <button onClick={toggleTheme} className="text-white   p-2 rounded-lg">
         {isDarkMode ? <Sun/> : <Moon/>}
       </button>
     </div>
