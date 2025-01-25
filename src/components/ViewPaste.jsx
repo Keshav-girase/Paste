@@ -16,19 +16,19 @@ const ViewPaste = () => {
   console.log("Paste->",paste);
   return (
     <div className="w-full h-full py-10 max-w-[1200px] mx-auto px-5 lg:px-0">
-      <div className="flex flex-col gap-y-5 items-start">
+      <div className="flex flex-col gap-y-5 items-start ">
         <input
           type="text"
           placeholder="Title"
           value={paste.title}
           disabled
-          className="w-full text-black border border-input rounded-md p-2"
+          className="w-full flex gap-3 px-4 py-2 rounded-[0.3rem] border border-input text-black dark:text-white dark:border-gray-600 p-2 bg-white dark:bg-gray-800 mt-6"
         />
         <div
-          className={`w-full flex flex-col items-start relative rounded bg-opacity-10 border border-[rgba(128,121,121,0.3)] backdrop-blur-2xl`}
-        >
+          className={`w-full flex flex-col items-start relative rounded bg-opacity-10 border border-input border-[rgba(128,121,121,0.3)] dark:bg-slate-900 backdrop-blur-2xl dark:border-gray-600`}
+        > 
           <div
-            className={`w-full rounded-t flex items-center justify-between gap-x-4 px-4 py-2 border-b border-[rgba(128,121,121,0.3)]`}
+            className={`w-full rounded-t flex items-center justify-between gap-x-4 px-4 py-2 border-b border border-input dark:border-gray-600`}
           >
             <div className="w-full flex gap-x-[6px] items-center select-none group">
               <div className="w-[13px] h-[13px] rounded-full flex items-center justify-center p-[1px] overflow-hidden bg-[rgb(255,95,87)]" />
@@ -41,7 +41,7 @@ const ViewPaste = () => {
             </div>
             {/* Circle and copy btn */}
             <div
-              className={`w-fit rounded-t flex items-center justify-between gap-x-4 px-4`}
+              className={`w-fit rounded-t flex items-center justify-between gap-x-4 px-4 `}
             >
               {/*Copy  button */}
               <button
@@ -61,7 +61,7 @@ const ViewPaste = () => {
             value={paste.content}
             disabled
             placeholder="Write Your Content Here...."
-            className="w-full p-3  focus-visible:ring-0"
+            className="w-full p-3  focus-visible:ring-0 border border-input text-black dark:text-white dark:border-gray-600 border-input p-2 bg-white dark:bg-gray-800"
             style={{
               caretColor: "#000",
             }}

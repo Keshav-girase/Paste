@@ -8,8 +8,8 @@ import { useSearchParams } from "react-router-dom";
 const Home = () => {
   const [value, setValue] = useState("");
   const [title, setTitle] = useState("");
-  const [searchParams, setSearchParams] = useSearchParams(); // Destructure useSearchParams
-  const pasteId = searchParams.get("pasteId"); // Get pasteId from the search params
+  const [searchParams, setSearchParams] = useSearchParams();
+  const pasteId = searchParams.get("pasteId");
   const pastes = useSelector((state) => state.paste.pastes);
   const dispatch = useDispatch();
 
@@ -24,7 +24,6 @@ const Home = () => {
     };
 
     if (pasteId) {
-      // If pasteId is present, update the paste
       dispatch(updatePastes(paste));
     } else {
       dispatch(addToPastes(paste));
@@ -32,8 +31,6 @@ const Home = () => {
 
     setTitle("");
     setValue("");
-
-    // Remove the pasteId from the URL after creating/updating a paste
     setSearchParams({});
   };
 
@@ -41,7 +38,6 @@ const Home = () => {
     setTitle("");
     setValue("");
     setSearchParams({});
-    // navigate("/");
   };
 
   useEffect(() => {
@@ -54,9 +50,8 @@ const Home = () => {
     }
   }, [pasteId, pastes]);
 
-
   return (
-    <div className="w-full h-full py-10 max-w-[1200px] mx-auto px-5 lg:px-0">
+    <div className="w-full h-full py-10 max-w-[1200px] mx-auto px-5 lg:px-0 dark:bg-gray-900 dark:text-white">
       <div className="flex flex-col gap-y-5 items-start">
         <div className="w-full flex flex-row gap-x-4 justify-between items-center">
           <input
@@ -64,10 +59,9 @@ const Home = () => {
             placeholder="Title"
             value={title}
             onChange={(e) => setTitle(e.target.value)}
-            // Dynamic width based on whether pasteId is present
             className={`${
               pasteId ? "w-[80%]" : "w-[85%]"
-            } text-black border border-input rounded-md p-2`}
+            } text-black dark:text-white border dark:border-gray-600 border-input rounded-md p-2 bg-white dark:bg-gray-800`}
           />
           <button
             className="text-white bg-blue-700 hover:bg-blue-800 focus:ring-4 focus:ring-blue-300 font-medium rounded-lg text-sm px-5 py-2.5 me-2 mb-2 dark:bg-blue-600 dark:hover:bg-blue-700"
@@ -76,36 +70,29 @@ const Home = () => {
             {pasteId ? "Update Paste" : "Create My Paste"}
           </button>
 
-        {pasteId &&  <button
-            className="text-white bg-blue-700 hover:bg-blue-800 focus:ring-4 focus:ring-blue-300 font-medium rounded-lg text-sm px-5 py-2.5 me-2 mb-2 dark:bg-blue-600 dark:hover:bg-blue-700"
-            onClick={resetPaste}
-          >
-            <PlusCircle size={20} />
-          </button>}
+          {pasteId && (
+            <button
+              className="text-white bg-blue-700 hover:bg-blue-800 focus:ring-4 focus:ring-blue-300 font-medium rounded-lg text-sm px-5 py-2.5 me-2 mb-2 dark:bg-blue-600 dark:hover:bg-blue-700"
+              onClick={resetPaste}
+            >
+              <PlusCircle size={20} />
+            </button>
+          )}
         </div>
 
-        <div
-          className={`w-full flex flex-col items-start relative rounded bg-opacity-10 border border-[rgba(128,121,121,0.3)] backdrop-blur-2xl`}
-        >
-          <div
-            className={`w-full rounded-t flex items-center justify-between gap-x-4 px-4 py-2 border-b border-[rgba(128,121,121,0.3)]`}
-          >
+        <div className="w-full flex flex-col items-start relative rounded bg-opacity-10 border dark:border-gray-600 backdrop-blur-2xl">
+          <div className="w-full rounded-t flex items-center justify-between gap-x-4 px-4 py-2 border-b dark:border-gray-600">
             <div className="w-full flex gap-x-[6px] items-center select-none group">
               <div className="w-[13px] h-[13px] rounded-full flex items-center justify-center p-[1px] overflow-hidden bg-[rgb(255,95,87)]" />
 
-              <div
-                className={`w-[13px] h-[13px] rounded-full flex items-center justify-center p-[1px] overflow-hidden bg-[rgb(254,188,46)]`}
-              />
+              <div className="w-[13px] h-[13px] rounded-full flex items-center justify-center p-[1px] overflow-hidden bg-[rgb(254,188,46)]" />
 
               <div className="w-[13px] h-[13px] rounded-full flex items-center justify-center p-[1px] overflow-hidden bg-[rgb(45,200,66)]" />
             </div>
-            {/* Circle and copy btn */}
-            <div
-              className={`w-fit rounded-t flex items-center justify-between gap-x-4 px-4`}
-            >
-              {/*Copy  button */}
+
+            <div className="w-fit rounded-t flex items-center justify-between gap-x-4 px-4">
               <button
-                className={`flex justify-center items-center  transition-all duration-300 ease-in-out group`}
+                className="flex justify-center items-center transition-all duration-300 ease-in-out group"
                 onClick={() => {
                   navigator.clipboard.writeText(value);
                   toast.success("Copied to Clipboard", {
@@ -113,17 +100,16 @@ const Home = () => {
                   });
                 }}
               >
-                <Copy className="group-hover:text-sucess-500" size={20} />
+                <Copy className="group-hover:text-green-500" size={20} />
               </button>
             </div>
           </div>
 
-          {/* TextArea */}
           <textarea
             value={value}
             onChange={(e) => setValue(e.target.value)}
             placeholder="Write Your Content Here...."
-            className="w-full p-3  focus-visible:ring-0"
+            className="w-full p-3 focus-visible:ring-0 bg-white dark:bg-gray-800 text-black dark:text-white"
             style={{
               caretColor: "#000",
             }}

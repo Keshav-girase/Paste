@@ -4,11 +4,13 @@ import { useSelector, useDispatch } from "react-redux";
 import { useState } from "react"; // Import useState
 import { removeFromPastes } from "../redux/pasteSlice";
 import { FormatDate } from "../utlis/formatDate";
+import { useNavigate } from "react-router-dom";
 
 const Paste = () => {
   const pastes = useSelector((state) => state.paste.pastes);
   const dispatch = useDispatch();
   const [searchTerm, setSearchTerm] = useState(""); // State to hold the search term
+  const nevigate = useNavigate();
 
   const handleDelete = (id) => {
     dispatch(removeFromPastes(id));
@@ -23,19 +25,19 @@ const Paste = () => {
     <div className="w-full h-full py-10 max-w-[1200px] mx-auto px-5 lg:px-0">
       <div className="flex flex-col gap-y-3">
         {/* Search */}
-        <div className="w-full flex gap-3 px-4 py-2  rounded-[0.3rem] border border-[rgba(128,121,121,0.3)]  mt-6">
+        <div className="w-full flex gap-3 px-4 py-2 rounded-[0.3rem] border border-input text-black dark:text-white dark:border-gray-600 border-input p-2 bg-white dark:bg-gray-800 mt-6">
           <input
             type="search"
             placeholder="Search paste here..."
-            className="focus:outline-none w-full bg-transparent"
+            className="focus:outline-none w-full bg-transparent text-black dark:text-white"
             value={searchTerm} // Bind the input to searchTerm state
             onChange={(e) => setSearchTerm(e.target.value)} // Update searchTerm on input change
           />
         </div>
 
         {/* All Pastes */}
-        <div className="flex flex-col border border-[rgba(128,121,121,0.3)] py-4 rounded-[0.4rem]">
-          <h2 className="px-4 text-4xl font-bold border-b border-[rgba(128,121,121,0.3)] pb-4">
+        <div className="flex flex-col border dark:border-gray-600 pb-4 rounded-[0.4rem] bg-white dark:bg-gray-900">
+          <h2 className="p-4 text-4xl font-bold border-b dark:border-gray-600 rounded-t-[0.4rem] ">
             All Pastes
           </h2>
           <div className="w-full px-4 pt-4 flex flex-col gap-y-5">
@@ -43,12 +45,12 @@ const Paste = () => {
               filteredPastes.map((paste) => (
                 <div
                   key={paste?._id}
-                  className="border border-[rgba(128,121,121,0.3)] w-full gap-y-6 justify-between flex flex-col sm:flex-row p-4 rounded-[0.3rem]"
+                  className="border dark:border-gray-700 w-full gap-y-6 justify-between flex flex-col sm:flex-row p-4 rounded-[0.3rem] bg-white dark:bg-gray-800 text-black dark:text-white"
                 >
                   {/* heading and Description */}
                   <div className="w-[50%] flex flex-col space-y-3">
-                    <p className="text-4xl font-semibold ">{paste?.title}</p>
-                    <p className="text-sm font-normal line-clamp-3 max-w-[80%] text-[#707070]">
+                    <p className="text-4xl font-semibold">{paste?.title}</p>
+                    <p className="text-sm font-normal line-clamp-3 max-w-[80%] text-gray-600 dark:text-gray-400">
                       {paste?.content}
                     </p>
                   </div>
@@ -56,58 +58,46 @@ const Paste = () => {
                   {/* icons */}
                   <div className="flex flex-col gap-y-4 sm:items-end">
                     <div className="flex gap-2 flex-wrap sm:flex-nowrap">
-                      <button
-                        className="p-2 rounded-[0.2rem] bg-white border border-[#c7c7c7]  hover:bg-transparent group hover:border-blue-500"
-                        // onClick={() => toast.error("Not working")}
+                      <button className="p-2 rounded-[0.2rem] bg-white dark:bg-gray-800 border 
+                      border-gray-400 dark:border-gray-700 hover:bg-transparent group 
+                      hover:border-blue-500"
+                        onClick={() => nevigate(`/?pasteId=${paste?._id}`)}
                       >
-                        <a href={`/?pasteId=${paste?._id}`}>
-                          <PencilLine
-                            className="text-black group-hover:text-blue-500"
-                            size={20}
-                          />
-                        </a>
+                        <PencilLine className="text-black dark:text-white group-hover:text-blue-500" size={20} />
                       </button>
                       <button
-                        className="p-2 rounded-[0.2rem] bg-white border border-[#c7c7c7]  hover:bg-transparent group hover:border-pink-500"
+                        className="p-2 rounded-[0.2rem] bg-white dark:bg-gray-800 border border-gray-400 dark:border-gray-700 hover:bg-transparent group hover:border-pink-500"
                         onClick={() => handleDelete(paste?._id)}
                       >
-                        <Trash2
-                          className="text-black group-hover:text-pink-500"
-                          size={20}
-                        />
+                        <Trash2 className="text-black dark:text-white group-hover:text-pink-500" size={20} />
                       </button>
-
-                      <button className="p-2 rounded-[0.2rem] bg-white border border-[#c7c7c7]  hover:bg-transparent group hover:border-orange-500">
-                        <a href={`/pastes/${paste?._id}`} target="_blank">
-                          <Eye
-                            className="text-black group-hover:text-orange-500"
-                            size={20}
-                          />
-                        </a>
+                      <button className="p-2 rounded-[0.2rem] bg-white dark:bg-gray-800 border 
+                            border-gray-400 dark:border-gray-700 hover:bg-transparent group 
+                            hover:border-orange-500"
+                        onClick={() => nevigate(`/pastes/${paste?._id}`)}
+                      >
+                          <Eye className="text-black dark:text-white group-hover:text-orange-500" size={20} />
                       </button>
                       <button
-                        className="p-2 rounded-[0.2rem] bg-white border border-[#c7c7c7]  hover:bg-transparent group hover:border-green-500"
+                        className="p-2 rounded-[0.2rem] bg-white dark:bg-gray-800 border border-gray-400 dark:border-gray-700 hover:bg-transparent group hover:border-green-500"
                         onClick={() => {
                           navigator.clipboard.writeText(paste?.content);
                           toast.success("Copied to Clipboard");
                         }}
                       >
-                        <Copy
-                          className="text-black group-hover:text-green-500"
-                          size={20}
-                        />
+                        <Copy className="text-black dark:text-white group-hover:text-green-500" size={20} />
                       </button>
                     </div>
 
-                    <div className="gap-x-2 flex ">
-                      <Calendar className="text-black" size={20} />
+                    <div className="gap-x-2 flex text-gray-700 dark:text-gray-300">
+                      <Calendar size={20} />
                       {FormatDate(paste?.createdAt)}
                     </div>
                   </div>
                 </div>
               ))
             ) : (
-              <div className="text-2xl text-center w-full text-chileanFire-500">
+              <div className="text-2xl text-center w-full text-red-500 dark:text-red-400">
                 No Data Found
               </div>
             )}
