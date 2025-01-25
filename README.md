@@ -3,7 +3,11 @@
 
 This is a Paste application built with React, Redux, and Tailwind CSS. The application allows users to create, view, update, and delete pastes. It also supports dark mode and includes search functionality.
 
-![Paste Application Screenshot]![image](https://github.com/user-attachments/assets/d8bcdb81-1815-481e-920d-ff2fe8ead35a)
+### Dark Mode
+![image](https://github.com/user-attachments/assets/d8bcdb81-1815-481e-920d-ff2fe8ead35a)
+### Light Mode
+![image](https://github.com/user-attachments/assets/7e390e37-a931-4c37-8300-7a5173e89519)
+
 
 ## Features
 
